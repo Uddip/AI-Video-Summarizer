@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState } from "react";
+import AppSidebar from "../components/AppSidebar";
 
 export default function Home() {
   const [result, setResult] = useState(""); // TODO: Write API route logic and hook up to the backend
@@ -27,74 +29,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <div
-        className={`bg-gray-800 text-white transition-all duration-300 ease-in-out 
-        ${sidebarVisible ? "w-64" : "w-0 overflow-hidden"}`}
-      >
-        <div className="p-4 flex justify-between items-center border-b border-gray-700">
-          {sidebarVisible && <h2 className="text-xl font-bold">Menu</h2>}
-          <button
-            onClick={toggleSidebar}
-            className="p-2 rounded-full hover:bg-gray-700 transition-colors text-xl"
-            aria-label="Close sidebar"
-          >
-            ❌
-          </button>
-        </div>
-
-        <nav className="p-4">
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-3 rounded hover:bg-gray-700 transition-colors"
-              >
-                🏠 {sidebarVisible && <span className="ml-3">Home</span>}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-3 rounded hover:bg-gray-700 transition-colors"
-              >
-                📜 {sidebarVisible && <span className="ml-3">History</span>}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-3 rounded hover:bg-gray-700 transition-colors"
-              >
-                📜{" "}
-                {sidebarVisible && (
-                  <span className="ml-3">Text Summarizer</span>
-                )}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-3 rounded hover:bg-gray-700 transition-colors"
-              >
-                ⚙️ {sidebarVisible && <span className="ml-3">About</span>}
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
       <div className="flex-1 flex flex-col relative">
-        {!sidebarVisible && (
-          <button
-            onClick={toggleSidebar}
-            className="absolute left-4 top-4 p-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-colors text-xl"
-            aria-label="Open sidebar"
-          >
-            ☰
-          </button>
-        )}
-
         <div className="flex-1 flex flex-col items-center justify-center p-4">
           <h1 className="text-xl font-bold mb-4">
             AI Video Insights Generator
