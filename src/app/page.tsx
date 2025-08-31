@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { summarizeVideo } from "./api/gemini/route";
 
 export default function Home() {
   const [result, setResult] = useState(""); // TODO: Write API route logic and hook up to the backend
@@ -19,6 +20,12 @@ export default function Home() {
     setInputText(url);
     const id = extractVideoId(url);
     setVideoId(id || "");
+  };
+
+  const handleVideoSummary = async () => {
+    const videoUrl = inputText;
+    setResult("...");
+    setResult(await summarizeVideo(videoUrl));
   };
 
   const toggleSidebar = () => {
@@ -99,7 +106,7 @@ export default function Home() {
           <h1 className="text-xl font-bold mb-4">
             AI Video Insights Generator
           </h1>
-          <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-md p-6 text-center">
+          <div className="w-full max-w-md bg-white rounded-xl shadow-md p-6 text-center">
             <div className="mb-4">
               <label
                 htmlFor="videoInput"
@@ -133,7 +140,7 @@ export default function Home() {
             )}
 
             <button
-              onClick={() => setResult("Summary will appear here")}
+              onClick={handleVideoSummary}
               disabled={!videoId}
               className={`bg-blue-600 hover:bg-blue-700 text-white p-2 rounded mt-4 ${
                 !videoId ? "opacity-50 cursor-not-allowed" : ""
@@ -141,8 +148,19 @@ export default function Home() {
             >
               Generate Summary
             </button>
-
-            {result && <div className="mt-4">Result: {result}</div>}
+          </div>
+          <div className="w-full max-w-md mt-[3rem] bg-white rounded-xl shadow-md p-6 text-center">
+            <div className="w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-start">
+              {result !== null && (
+                <div className="flex items-center justify-center p-4 rounded min-h-[80px]">
+                  {result === "..." ? (
+                    <div className="animate-spin rounded-full h-6 w-6 border-4 border-gray-300 border-t-blue-500"></div>
+                  ) : (
+                    <p>{result}</p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
